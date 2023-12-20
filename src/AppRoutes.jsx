@@ -5,8 +5,16 @@ import Tables from "./components/Cooks/Tables";
 import CartItemsMenu from "./components/Client/CartItemsMenu";
 import DataMenu from "./components/Client/DataMenu";
 import OrderWaiters from "./components/Waiter/OrdersWaiters";
+import { useProducts } from "./hooks/useProducts";
+import { useEffect } from "react";
 
 const AppRoutes = () => {
+    const { handlerFetchAllProducts } = useProducts();
+
+    useEffect(() => {
+        handlerFetchAllProducts();
+    }, []);
+
     return (
         <BrowserRouter>
             <Routes>
