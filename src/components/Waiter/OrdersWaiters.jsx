@@ -60,7 +60,7 @@ const OrderWaiters = () => {
       </div>
       <div className='grid grid-cols-5 gap-5 align-middle w-full p-20 justify-center'>
   {showItems == true &&
-    data?.map((dataitems) => (
+    data.map((dataitems) => (
       <div className="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 mx-auto w-48 h-48">
         <div className="px-4 py-2">
           <h1 className="text-xs font-bold text-gray-800 uppercase dark:text-white">{dataitems.name}</h1>
