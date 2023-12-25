@@ -3,13 +3,18 @@ import { menucategories } from '../data/menucategories';
 import { dataitemsmenu } from '../data/dataitemsmenu';
 import { TEInput, TERipple } from "tw-elements-react";
 import NavEmployes from '../Nav/NavEmployes';
+import {useFetch} from '../hooks/useFetch';
+import {restaurantApis} from '../../apis/restaurantApis';
 
 const OrderWaiters = () => {
   const [showItems, setShowItems] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [countByMenuItem, setCountByMenuItem] = useState({});
 
+  const data = useFetch(`${restaurantApis}/products`);
   const categoryfilter = dataitemsmenu.filter((item) => item.category === selectedCategory);
+
+  
 
   const getItems = (category) => {
     setShowItems(true);
@@ -53,16 +58,14 @@ const OrderWaiters = () => {
             </div>
           ))}
       </div>
-      <div className='grid grid-cols-3 gap-3 align-middle w-full p-20 justify-center'>
+      <div className='grid grid-cols-5 gap-5 align-middle w-full p-20 justify-center'>
   {showItems == true &&
-    categoryfilter.map((dataitems) => (
+    data?.map((dataitems) => (
       <div className="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 mx-auto w-48 h-48">
         <div className="px-4 py-2">
           <h1 className="text-xs font-bold text-gray-800 uppercase dark:text-white">{dataitems.name}</h1>
         </div>
-
-        <img className="w-full h-full mt-2" src={dataitems.img} alt="NIKE AIR"/>
-
+        <img className="w-full h-28 mt-2" src='' alt="NIKE AIR"/>
         <div className="flex items-center justify-between px-4 py-2 bg-gray-900">
           <h1 className="text-lg font-bold text-white">$129</h1>
           <button className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-300 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none">Add to cart</button>

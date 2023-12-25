@@ -19,7 +19,7 @@ const WaiterLogin = () => {
                 type="password"
                 label="Password"
                 className="mb-6"
-                size="lg"
+                size="lg" 
               ></TEInput> 
                <div className="text-center lg:text-center">
                 <TERipple rippleColor="light">
