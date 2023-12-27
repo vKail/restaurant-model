@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialTables = [];
+const initialTables = null;
 
 export const tableSlice = createSlice({
     name: "table",
@@ -10,15 +10,20 @@ export const tableSlice = createSlice({
     reducers:{
         getTables: (state, action) => {
             state.tables = action.payload;
+            
     },
-    updateTableStatus: (state, action) => {
+    updateTableStatusRedux: (state, action) => {
         const { id, newStatus } = action.payload;
         const index = state.tables.findIndex(table => table.id === id);
         if (index !== -1) {
           state.tables[index].status = newStatus;
         }
-      }
+      },
+
+    setTableByIdRedux: (state, action) => {
+      state.selectedTableId = action.payload;
+    }
     },
 });
 
-export const { getTables, updateTableStatus } = tableSlice.actions;
+export const { getTables, updateTableStatusRedux, setTableByIdRedux } = tableSlice.actions;
