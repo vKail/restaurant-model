@@ -1,23 +1,59 @@
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { getAllTables } from "../services/tableServices";
-import { getTables } from "../../store/slices/tables/tableSlice";
+import { useEffect } from 'react';
+import { getAllTables, updateTableStatus } from "../services/tableServices";
+import { getTables, updateTableStatusRedux } from "../../store/slices/tables/tableSlice";
 
 export const useTables = () => {
     const { tables } = useSelector((state) => state.table);
+    const { tableId } = useParams(); 
     const dispatch = useDispatch();
 
-    const handlerGetProducts = async () => {
+    const handlerGetTables = async () => {
         try {
           const response = await getAllTables();
           if (response.status === 200) {
             dispatch(getTables(response.data));
+            localStorage.setItem("id", JSON.stringify(response.data));
           }
         } catch (error) {
           console.log(error);
         }
       }
 
-    return { tables, handlerGetProducts };
+    const handlerUpdateTableStatus = async (id, newStatus) => {
+      try{
+        const response = await updateTableStatus(id, newStatus);
+        if(response.status === 200){
+          dispatch(updateTableStatusRedux({id, newStatus}))
+        }
+        else {
+          console.log(response)
+        }
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
+
+    const handlerGetTablesById = async (id) => {
+      try {
+        const response = await getTableById(id);
+        if (response.status === 200) {
+          dispatch(getTableByIdRedux(response.data));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    useEffect(() => {
+      if (tableId) {
+          handlerGetTablesById(tableId);
+      }
+  }, [tableId, handlerGetTablesById]);
+
+    return { tables, handlerGetTables, handlerUpdateTableStatus, handlerGetTablesById };
 }
 
 
