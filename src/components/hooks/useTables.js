@@ -14,7 +14,7 @@ export const useTables = () => {
           const response = await getAllTables();
           if (response.status === 200) {
             dispatch(getTables(response.data));
-            localStorage.setItem("id", JSON.stringify(response.data));
+            sessionStorage.setItem("id", JSON.stringify(response.data));
           }
         } catch (error) {
           console.log(error);

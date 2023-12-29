@@ -22,6 +22,6 @@ export const menucategories = [
     {
         name: 'Bebidas',
         img : 'https://cursa-json-routes.s3.amazonaws.com/texts/byId/1000257/imgs/thumb.jpg',
-        category: 'bebida',
+        category: 'bebidas',
     },
 ];

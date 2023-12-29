@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialTables = null;
+const initialTables = JSON.parse(localStorage.getItem('tables')) || [];
 
 export const tableSlice = createSlice({
     name: "table",

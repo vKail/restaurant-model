@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialLoginState = JSON.parse(localStorage.getItem("login")) || {
     isAuth: false,
-    user: undefined,
+    employee: undefined,
 };
 
 export const authSlice = createSlice({
@@ -14,14 +14,14 @@ export const authSlice = createSlice({
         authSuccess: (state, action) => {
             state.login = {
                 isAuth: true,
-                user: action.payload.user,
+                employee: action.payload.user,
                 token: action.payload.token
             }
         },
         authLogout: (state) => {
             state.login = {
                 isAuth: false,
-                user: undefined,
+                employee: undefined,
                 token: undefined
             }
         },
