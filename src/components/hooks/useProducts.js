@@ -12,6 +12,7 @@ export const useProducts = () => {
           const response = await getAllProducts();
           if (response.status === 200) {
             dispatch(getProductsRedux(response.data));
+            sessionStorage.setItem("products", JSON.stringify(response.data));
           }
         } catch (error) {
           console.log(error);
