@@ -1,6 +1,7 @@
 import Tables from "../components/Waiter/Tables";
 import OrderWaiters from "../components/Waiter/OrdersWaiters";
 import OrdersCooks from "../components/Cooks/OrdersCooks";
+import OrdersCreated from "../components/Waiter/OrdersCreated";
 import useAuth from "../components/hooks/useAuth";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -16,6 +17,7 @@ const PageRoutes = () => {
                         <Route path="/*" element={<Navigate to='/tables' />} />
                         <Route path="/tables" element={<Tables />} /> 
                         <Route path="/orders/:tableId" element={<OrderWaiters />} />  
+                        <Route path="/orders-created" element={<OrdersCreated />} />
                         
                     </>
                 )}

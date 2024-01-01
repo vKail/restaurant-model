@@ -52,7 +52,6 @@ const OrderWaiters = () => {
 
   const subtractCountItem = (itemId) => {
     const productPrice = products.find(product => product.id === itemId)?.price;
-
     setCountByMenuItem((prevCount) => ({
       ...prevCount,
       [itemId]: {
@@ -61,6 +60,7 @@ const OrderWaiters = () => {
       }
     }));
   };
+
 
   const calculateTotal = () => {
     return Object.values(countByMenuItem).reduce((total, itemId) => {
@@ -121,7 +121,7 @@ const OrderWaiters = () => {
         <div className='flex flex-col'>
         <div className="md:flex flex-row md:justify-start">
           {menucategories.map((menucategory) => (
-            <div key={menucategory.name} className="flex flex-col items-center justify-start w-full max-w-sm mx-auto p-5" >
+            <div key={menucategory.name} className="flex flex-col items-center justify-start w-full max-w-sm mx-auto p-5 transition duration-300 ease-in-out transform  hover:scale-110 " >
               <div className=" h-36 bg-gray-300 bg-center bg-cover rounded-lg shadow-md">
                 <img className="w-full h-36 rounded-lg" src={menucategory.img} alt="" />
               </div>
@@ -143,7 +143,7 @@ const OrderWaiters = () => {
       <div className='grid grid-cols-5 gap-5 align-middle w-full p-20 justify-center'>
   {showItems == true &&
     categoryfilter.map((dataitems) => (
-      <div className="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 mx-auto w-56 h-48 " key={dataitems.id}>
+      <div className="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 mx-auto w-56 h-48 transition duration-300 ease-in-out transform  hover:scale-105" key={dataitems.id}>
         <div className="px-4 py-2">
           <h1 className="text-xs font-bold text-gray-800 uppercase dark:text-white">{dataitems.name}</h1>
           
@@ -161,7 +161,7 @@ const OrderWaiters = () => {
     
 </div>
         </div>
-        <button className=' font-bold text-white border border- p-1 w-32 rounded-3xl bg-science-blue-600 hover:bg-white hover:text-black'
+        <button className=' font-bold text-white border border- p-1 w-32 rounded-3xl bg-science-blue-600 transition duration-300 ease-in-out transform  hover:scale-110'
             onClick={() => enviarOrdenCompleta()}
           >Enviar Orden</button>
    </div>
