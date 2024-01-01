@@ -32,8 +32,7 @@ const Tables = () => {
         Swal.fire("Gracias por confirmar :)").then(() => {
             // Redirige a otra página si el usuario selecciona "Sí"
             navigate(`/orders/${tableId}`); // v6
-            handlerUpdateTableStatus(`${tableId}`, 'free')
-
+            
         });
     } else if (accept === '0') {
         // Cierra el cuadro de diálogo si el usuario selecciona "No"
@@ -56,7 +55,10 @@ const Tables = () => {
                         <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">{table.status}</h3>
 
                         <div className={`flex items-center justify-between w-full px-3 py-2 ${table.status === 'free' ? 'bg-green-600' : 'bg-red-600'} dark:bg-gray-700`}>
-                        <button className="px-2 py-1 text-xs font-semibold text-slate-900 uppercase transition-colors duration-300 transform bg-gray-100 rounded hover:bg-slate-600 hover:text-white focus:bg-gray-700 focus:outline-none  "  onClick={() => optionscheck(table.id)}>
+                        <button  className={`px-2 py-1 text-xs font-semibold text-slate-900 uppercase transition-colors duration-300 transform bg-gray-100 rounded hover:bg-slate-600 hover:text-white focus:bg-gray-700 focus:outline-none ${table.status !== 'free' ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                                 onClick={() => table.status === 'free' && optionscheck(table.id)}
+                                 disabled={table.status !== 'free'}
+    >
                           <p>ORDEN</p>
                         </button>
                             

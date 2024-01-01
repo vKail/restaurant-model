@@ -9,10 +9,12 @@ import { useOrder } from '../hooks/useOrder';
 import Alert from '@mui/material/Alert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const OrderWaiters = () => {
+  const navigate = useNavigate();
+  const {handlerUpdateTableStatus} = useTables();
   const [showItems, setShowItems] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [countByMenuItem, setCountByMenuItem] = useState({});
@@ -86,6 +88,12 @@ const OrderWaiters = () => {
 
 
     const enviarOrdenCompleta = () => {
+      const isOrderValid = Object.values(countByMenuItem).some(item => item.count > 0);
+
+      if (!isOrderValid) {
+        toast.error("No hay productos seleccionados");
+        return;
+      }
       // Recuperar el ID del empleado almacenado en localStorage
       const storedLogin = localStorage.getItem("login");
       let employeeId = null;
@@ -107,7 +115,12 @@ const OrderWaiters = () => {
     
       // Aquí enviarías la orden completa a la base de datos o a través de una acción de Redux
       console.log('Enviando orden completa:', order);
-      handlerCreateOrder(order);
+      handlerCreateOrder(order).then(() => {
+        handlerUpdateTableStatus(`${tableId}`, 'occupied');
+        navigate('/tables'); // Redirige a /tables
+      }).catch(error => {
+        toast.error("Error al enviar la orden: " + error.message);
+      });
     };
 
   return (
@@ -161,9 +174,13 @@ const OrderWaiters = () => {
     
 </div>
         </div>
-        <button className=' font-bold text-white border border- p-1 w-32 rounded-3xl bg-science-blue-600 transition duration-300 ease-in-out transform  hover:scale-110'
-            onClick={() => enviarOrdenCompleta()}
-          >Enviar Orden</button>
+        <button
+  className=' font-bold text-white border p-1 w-32 rounded-3xl bg-science-blue-600 transition duration-300 ease-in-out transform  hover:scale-110'
+  onClick={() => enviarOrdenCompleta()}
+  disabled={!Object.values(countByMenuItem).some(item => item.count > 0)} // Desactiva el botón si no hay productos
+>
+  Enviar Orden
+</button>
    </div>
   );
 };
