@@ -14,7 +14,7 @@ export const authSlice = createSlice({
         authSuccess: (state, action) => {
             state.login = {
                 isAuth: true,
-                employee: action.payload.user,
+                employee: action.payload.employee,
                 token: action.payload.token
             }
         },

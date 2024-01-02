@@ -33,5 +33,16 @@ export const updateOrder = async (id, order) => {
     } catch (error) {
         throw error
     }
+
+
+    
+};
+
+export const deleteOrder = async (id) => {
+    try{
+        return await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/orders/${id}`);
+    } catch (error) {
+        throw error
+    }
     
 };

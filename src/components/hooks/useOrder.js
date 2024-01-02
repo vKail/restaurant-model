@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import {getAllOrders, createOrder} from "../services/orderService";
+import {getAllOrders, createOrder, deleteOrder} from "../services/orderService";
 import { getOrder, addOrder } from "../../store/slices/orders/orderSlice";
 
 export const useOrder = () => {
@@ -29,5 +29,16 @@ export const useOrder = () => {
         }
       }
 
-    return { orders, handlerGetOrders, handlerCreateOrder };
+      const handlerDeleteOrder = async (id) => {
+        try {
+          const response = await deleteOrder(id);
+          if (response.status === 200) {
+            dispatch(deleteOrderRedux(id));
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+    return { orders, handlerGetOrders, handlerCreateOrder, handlerDeleteOrder };
 }
