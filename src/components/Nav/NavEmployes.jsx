@@ -44,8 +44,8 @@ const NavEmployes = () => {
         <div className={`items-center ${isOpen ? 'flex' : 'hidden'} md:flex`}>
           <div className="flex flex-col mt-2 space-y-1 md:flex-row md:mt-0 md:space-x-8 md:space-y-0">
             {/* Enlaces de navegación aquí */}
-            <Link to={'/mesas'} className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">Mesas</Link>
-            <Link to={'/orders-created'} className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">Pedidos</Link>
+            <Link to={'/mesas'} className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition duration-300 ease-in-out transform  hover:scale-110">Mesas</Link>
+            <Link to={'/orders-created'} className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition duration-300 ease-in-out transform  hover:scale-110">Pedidos</Link>
             
           </div>
         </div>

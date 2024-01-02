@@ -7,12 +7,16 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 const PageRoutes = () => {
         const {login} = useAuth();
+
+        console.log(login);
+
+        if(!login.employee) return null;
         
         return (
           <>
           <main>
           <Routes> 
-                {login.employee.role === 'waiter' && (
+                {login.employee?.role === 'waiter' && (
                     <>
                         <Route path="/*" element={<Navigate to='/tables' />} />
                         <Route path="/tables" element={<Tables />} /> 
@@ -21,7 +25,7 @@ const PageRoutes = () => {
                         
                     </>
                 )}
-                {login.employee.role === 'chef' && (
+                {login.employee?.role === 'chef' && (
                     <>
                         <Route path="/*" element={<Navigate to='/chef' />} />
                         <Route path="/chef" element={<OrdersCooks />} />

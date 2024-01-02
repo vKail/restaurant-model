@@ -15,8 +15,14 @@ export const orderSlice = createSlice({
     addOrder: (state, action) => {
         state.orders.push(action.payload);
     },
-
+    deleteOrderRedux: (state, action) => {
+        const { id } = action.payload;
+        const index = state.orders.findIndex(order => order.id === id);
+        if (index !== -1) {
+          state.orders.splice(index, 1);
+        }
+      },
     },
    });
     
-export const { getOrder, addOrder } = orderSlice.actions;
+export const { getOrder, addOrder, deleteOrderRedux } = orderSlice.actions;
