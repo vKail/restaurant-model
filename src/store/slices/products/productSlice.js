@@ -12,7 +12,11 @@ export const productSlice = createSlice({
     initialState: initialProductState,
     reducers: {
         getProductsRedux: (state, action) => {
-            state.products = action.payload;
+            // Asumiendo que cada producto del backend no tiene un campo 'count'
+            state.products = action.payload.map(product => ({
+                ...product,
+                count: 0 // Inicializa el contador en 0
+            }));
         },
         getProductByIdRedux: (state, action) => {
             state.product = action.payload;
@@ -32,6 +36,18 @@ export const productSlice = createSlice({
         setErrorRedux: (state, action) => {
             state.error = action.payload;
         },
+        incrementProductCount: (state, action) => {
+            const product = state.products.find(p => p.id === action.payload.productId);
+            if (product) {
+                product.count += 1;
+            }
+        },
+        decrementProductCount: (state, action) => {
+            const product = state.products.find(p => p.id === action.payload.productId);
+            if (product && product.count > 0) {
+                product.count -= 1;
+            }
+        },
     },
 });
 
@@ -42,4 +58,6 @@ export const {
     deleteProductRedux,
     setLoadingRedux,
     setErrorRedux,
+    incrementProductCount,
+    decrementProductCount,
 } = productSlice.actions;

@@ -22,7 +22,14 @@ export const orderSlice = createSlice({
           state.orders.splice(index, 1);
         }
       },
+      updateOrderRedux: (state, action) => {
+        const { id, newStatus } = action.payload;
+        const index = state.orders.findIndex(order => order.id === id);
+        if (index !== -1) {
+          state.orders[index].status = newStatus;
+        }
+    },
     },
    });
     
-export const { getOrder, addOrder, deleteOrderRedux } = orderSlice.actions;
+export const { getOrder, addOrder, deleteOrderRedux, updateOrderRedux } = orderSlice.actions;

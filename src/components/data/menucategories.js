@@ -15,8 +15,8 @@ export const menucategories = [
         category: 'pizza',
             },
     {
-        name: 'Postres',
-        img : 'https://i-ticketing.iwos.com/256x256-th/products/136/products_136_36.jpg',
+        name: 'Gaseosas',
+        img : 'https://img.freepik.com/foto-gratis/hielo-cayendo-bebida-marron_1194-1074.jpg?w=740&t=st=1704235027~exp=1704235627~hmac=ade5edcd2a84f958c70adfa7fd20ca9033c2e283b4301281e27ed8512fab81de',
         category: 'postre',
     },
     {

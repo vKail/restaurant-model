@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import { getAllTables, updateTableStatus } from "../services/tableServices";
-import { getTables, updateTableStatusRedux } from "../../store/slices/tables/tableSlice";
+import { getTables, updateTableStatusRedux, getTableById } from "../../store/slices/tables/tableSlice";
 
 export const useTables = () => {
     const { tables } = useSelector((state) => state.table);

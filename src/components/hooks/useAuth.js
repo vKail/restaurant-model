@@ -25,17 +25,9 @@ const useAuth = () => {
         }
     }
 
-    const handlerLogout = async (employee) => {
-       try {
-              const response = await sign_out(employee)
-              if (response.status === 200) {
-                localStorage.removeItem("login")
-                localStorage.removeItem("token")
-                dispach(authLogout())
-              }
-       } catch (error) {
-           
-       }
+    const handlerLogout =  () => {
+        dispach(authLogout())
+        localStorage.clear();
     }
 
     return { login, handlerLogin, handlerLogout }
