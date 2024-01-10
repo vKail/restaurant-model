@@ -45,7 +45,7 @@ const NewOrder = () => {
                 product_id: id,
             })),
         };
-
+        toast.success("Enviando orden completa");
         console.log('Enviando orden completa:', order);
         handlerCreateOrder(order).then(() => {
             handlerUpdateTableStatus(tableId, 'occupied');
@@ -61,16 +61,16 @@ const NewOrder = () => {
             <div className='flex flex-row bg-science-blue-900 p-5 rounded-2xl my-5 w-full justify-center'>
                 {selectedTable ? <h1 className='font-bold text-white'>MESA {selectedTable.id}</h1> : <h1>...</h1>}
             </div>
-            <ToastContainer />
+            
             {/* Aquí puedes incluir más UI si es necesario */}
-            <OrderWaiters />
+            <OrderWaiters mode="create"/>
             <button
                 className='font-bold text-white border p-1 w-32 rounded-3xl bg-science-blue-600 transition duration-300 ease-in-out transform  hover:scale-110'
-                onClick={() => enviarOrdenCompleta()}
-                disabled={products.filter(product => product.count > 0).length === 0}
+                onClick={() => enviarOrdenCompleta()}              
             >
                 Enviar Orden
             </button>
+            <ToastContainer />
         </div>
     );
 };

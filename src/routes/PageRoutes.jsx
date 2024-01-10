@@ -11,11 +11,13 @@ import { useOrder } from "../components/hooks/useOrder";
 import UpdateOrders from "../components/Waiter/UpdateOrders";
 import NewOrder from "../components/Waiter/NewOrder";
 
+
 const PageRoutes = () => {
         const {login} = useAuth();
         const { handlerGetTables } = useTables();
         const { handlerGetProducts } = useProducts();
         const { handlerGetOrders } = useOrder();
+        
         useEffect(() => {
              handlerGetOrders();
              handlerGetTables();

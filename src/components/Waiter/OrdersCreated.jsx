@@ -7,7 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const OrdersCreated = () => {
     const navigate = useNavigate();
-    const { orders, handlerDeleteOrder, handlerUpadateOrder, handlerGetOrders } = useOrder();
+    const { orders, handlerDeleteOrder, handlerUpadateOrder, handlerGetOrders, handlerUpdateOrderState } = useOrder();
     const { handlerGetTablesById, handlerUpdateTableStatus } = useTables();
     const storedLogin = localStorage.getItem("login");
     let employeeId = null;
@@ -22,7 +22,7 @@ const OrdersCreated = () => {
 
     const optionsCheckUpdate = async (orderId) => {
         const { value: accept } = await Swal.fire({
-            title: "¿Desea actualizar la orden?",
+            title: "¿Desea finalizar la orden?",
             input: "radio",
             inputOptions: {
                 '1': 'Sí',
@@ -40,9 +40,9 @@ const OrdersCreated = () => {
         });
 
         if (accept === '1') {
-            Swal.fire("La orden será actualizada :)").then(() => {
+            Swal.fire("La orden será finalizada :)").then(() => {
                 // Llama a la función para actualizar la orden si el usuario selecciona "Sí"
-                handlerUpadateOrder(orderId, 'finish');
+                handlerUpdateOrderState(orderId);
 
             });
         } else if (accept === '0') {
@@ -83,16 +83,27 @@ const OrdersCreated = () => {
             Swal.close();
         }
     }
-
+    const getOrderStatusText = (status) => {
+        switch (status) {
+            case 'in_process':
+                return 'En proceso';
+            case 'ready':
+                return 'Lista';
+            case 'finish':
+                return 'Finalizada';
+            default:
+                return 'Estado desconocido';
+        }
+    };
     return (
         <div className="">
             <NavEmployes />
             <h1 className="p-6 font-bold">Ordenes</h1>
             <div className="md:grid md:grid-cols-2 lg:grid lg:grid-cols-3  xl:grid xl:grid-cols-4 lg:gap-5 p-5 " >
                 {ordersFiltered.map((order) => (
-                    <div className="border border-zinc-200 p-5  rounded-2xl shadow-2xl m-5 w-12/12 box-border min-w-min" key={order.order_number}>
+                    <div className="border border-zinc-200 p-5  rounded-2xl shadow-2xl m-5 w-12/12 box-border min-w-min" key={order.order.order_number}>
                         <a className=" font-bold">Orden {order.order.order_number}</a>
-                        <p>Estado: {(order.order.status) == 'in_process' ? 'En proceso' : 'Finalizado'}</p>
+                        <p>Estado: {getOrderStatusText(order.order.status)}</p>
                         <p>Mesa: {order.order.table_id}</p>
                         {Array.isArray(order.items) && order.items.map((item) => (
                             <div key={item.product.id}>

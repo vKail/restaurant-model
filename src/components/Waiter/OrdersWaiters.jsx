@@ -12,12 +12,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { decrementProductCount, incrementProductCount } from '../../store/slices/products/productSlice';
 import { useDispatch } from 'react-redux';
+import { setProductCount } from '../../store/slices/products/productSlice';
 
 
-const OrderWaiters = (action) => {
+const OrderWaiters = ({ mode }) => {
   const navigate = useNavigate();
   const {handlerUpdateTableStatus} = useTables();
   const [showItems, setShowItems] = useState(false);
+  const { orderId } = useParams();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [countByMenuItem, setCountByMenuItem] = useState({});
   const {products, handlerGetProducts} = useProducts();
@@ -26,6 +28,19 @@ const OrderWaiters = (action) => {
   const [alerta, setAlerta] = useState({ tipo: null, mensaje: '' });
   const { tableId } = useParams(); // Obtiene el tableId de la URL
   const dispatch = useDispatch();
+    const productos = useSelector((state) => state.product.products);
+    const order = useSelector((state) =>
+        state.order.orders.find((o) => o.id == orderId)
+    );
+
+    useEffect(() => {
+      if (mode === 'update' && order) {
+          order.items.forEach((item) => {
+              dispatch(setProductCount({ productId: item.product.id, count: item.quantity }));
+          });
+      }
+  }, [dispatch, order, mode]);
+
 
   const getItems = (category) => {
     setShowItems(true);
@@ -70,22 +85,38 @@ const OrderWaiters = (action) => {
           
       </div>
       <div className='md:grid md:grid-cols-3 md:gap-3 lg:grid lg:grid-cols-5 lg:gap-5 align-middle w-full  justify-center '>
-  {showItems == true &&
-    categoryfilter.map((dataitems) => (
-      <div className="max-w-xs overflow-hidden bg-white rounded-lg shadow-2xl dark:bg-gray-800 my-5 mx-auto w-56 h-48 transition duration-300 ease-in-out transform  hover:scale-105" key={dataitems.id}>
-        <div className="px-4 py-2">
-          <h1 className="text-xs font-bold text-gray-800 uppercase dark:text-white">{dataitems.name}</h1>
+      {showItems &&
+        categoryfilter.map((dataitem) => (
           
-        </div>
-        <img className="w-full h-28 mt-2" src='' alt={dataitems.name}/>
-        <div className="flex items-center justify-between px-4 py-2 bg-science-blue-900">
-          <h1 className="text-lg font-bold text-white">${dataitems.price}</h1>
-          <button className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-300 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none" onClick={() => subtractCountItem(dataitems.id)}>-</button>
-          <span>{dataitems.count || 0}</span>
-          <button className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-300 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none" onClick={()=> addCountItem(dataitems.id)}>+</button>
-        </div>
-      </div>
-    ))}
+          <div
+            className="max-w-xs overflow-hidden bg-white rounded-lg shadow-2xl dark:bg-gray-800 my-5 mx-auto w-56 h-48 transition duration-300 ease-in-out transform hover:scale-105"
+            key={dataitem.id}
+          >
+            <div className="px-4 py-2">
+              <h1 className="text-xs font-bold text-gray-800 uppercase dark:text-white">
+                {dataitem.name}
+              </h1>
+            </div>
+            <img className="w-full h-28 mt-2" src={dataitem.image || ''} alt={dataitem.name} />
+            <div className="flex items-center justify-between px-4 py-2 bg-science-blue-900">
+              <h1 className="text-lg font-bold text-white">${dataitem.price}</h1>
+              <button
+                className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-300 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none"
+                onClick={() => subtractCountItem(dataitem.id)}
+              >
+                -
+              </button>
+              {/* Aquí se muestra la cantidad directamente desde Redux */}
+              <span className='text-white'>{dataitem.count}</span>
+              <button
+                className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-300 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none"
+                onClick={() => addCountItem(dataitem.id)}
+              >
+                +
+              </button>
+            </div>
+          </div>
+        ))}
     
 </div>
         </div>

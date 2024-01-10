@@ -48,6 +48,13 @@ export const productSlice = createSlice({
                 product.count -= 1;
             }
         },
+        setProductCount: (state, action) => {
+            const { productId, count } = action.payload;
+            const productIndex = state.products.findIndex(product => product.id === productId);
+            if (productIndex !== -1) {
+                state.products[productIndex].count = count;
+            }
+        },
     },
 });
 
@@ -60,4 +67,5 @@ export const {
     setErrorRedux,
     incrementProductCount,
     decrementProductCount,
+    setProductCount,
 } = productSlice.actions;
