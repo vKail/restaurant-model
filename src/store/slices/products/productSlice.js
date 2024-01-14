@@ -9,7 +9,10 @@ const initialProductState =  JSON.parse(localStorage.getItem("products")) || {
 
 export const productSlice = createSlice({
     name: "product",
-    initialState: initialProductState,
+    initialState: {
+        products: initialProductState,
+        productById: [],
+    },
     reducers: {
         getProductsRedux: (state, action) => {
             // Asumiendo que cada producto del backend no tiene un campo 'count'
@@ -19,7 +22,7 @@ export const productSlice = createSlice({
             }));
         },
         getProductByIdRedux: (state, action) => {
-            state.product = action.payload;
+            state.productById = action.payload;
         },
         addProductRedux: (state, action) => {
             state.products.push(action.payload);
@@ -48,6 +51,13 @@ export const productSlice = createSlice({
                 product.count -= 1;
             }
         },
+        setProductCount: (state, action) => {
+            const { productId, count } = action.payload;
+            const productIndex = state.products.findIndex(product => product.id === productId);
+            if (productIndex !== -1) {
+                state.products[productIndex].count = count;
+            }
+        },
     },
 });
 
@@ -60,4 +70,5 @@ export const {
     setErrorRedux,
     incrementProductCount,
     decrementProductCount,
+    setProductCount,
 } = productSlice.actions;

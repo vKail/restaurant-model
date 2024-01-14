@@ -36,6 +36,10 @@ export const useTables = () => {
       }
     }
 
+    const handlerAddTable = (table) => {
+      dispatch(addTableRedux(table));
+    }
+
     const handlerGetTablesById = async (id) => {
       try {
         const response = await getTableById(id);

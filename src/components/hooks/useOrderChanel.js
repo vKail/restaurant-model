@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import ActionCable from "actioncable";
 
-export const useOrdersChannel = (handlerGetOrders) => {
+export const useOrderChannel = (handlerGetOrders) => {
     useEffect(() => {
         // Inicializar y obtener los pedidos al montar el componente
         handlerGetOrders();
@@ -9,7 +9,7 @@ export const useOrdersChannel = (handlerGetOrders) => {
         // Crear y configurar el consumidor de Action Cable
         const actionCable = ActionCable.createConsumer("ws://localhost:3000/cable");
 
-        const ordersChannel = actionCable.subscriptions.create("OrdersChannel", {
+        const ordersChannel = actionCable.subscriptions.create("OrderChannel", {
           connected() {
             console.log("Connected to OrdersChannel: ", this);
           },
@@ -28,7 +28,7 @@ export const useOrdersChannel = (handlerGetOrders) => {
     
         // Limpieza al desmontar el componente
         return () => {
-          //ordersChannel.unsubscribe();
+          ordersChannel.unsubscribe();
           actionCable.disconnect();
         };
       }, []); // Asegúrate de que useEffect no tenga dependencias para evitar el ciclo infinito
