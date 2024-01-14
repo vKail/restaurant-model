@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import {getAllOrders, createOrder, deleteOrder, updateOrder, getOrderById, updateItem, updateOrderState, addItemsOrder} from "../services/orderService";
-import { getOrder, addOrder, updateOrderRedux, getOrderByID, deleteOrderRedux } from "../../store/slices/orders/orderSlice";
+import { getOrder, addOrder, updateOrderRedux, getOrderByNumber, deleteOrderRedux } from "../../store/slices/orders/orderSlice";
 import { productSlice } from "../../store/slices/products/productSlice";
 
 export const useOrder = () => {
@@ -23,18 +23,8 @@ export const useOrder = () => {
         try {
           const response = await getOrderById(id);
           if (response.status === 200) {
-            // Asegúrate de que estás despachando la orden correcta
-            dispatch(getOrderByID(response.data.order));
-            // Actualiza el recuento de productos
-            response.data.order.items.forEach(item => {
-              dispatch(setProductCount({
-                productId: item.product.id, // Esto asume que tu producto tiene una propiedad 'id'
-                count: item.quantity
-              }));
-            });
-            return response.data.order;
+            dispatch(getOrderByNumber(response.data));
           }
-          
         } catch (error) {
           console.log(error);
         }

@@ -9,6 +9,14 @@ export const getAllTables = async () => {
     }
 }
 
+export const createTable = async (table) => {
+    try{
+        return await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/tables`, {table});
+
+    } catch (error) {
+        throw error
+    }
+}
 
 export const getTableById = async (id) => {
     try{

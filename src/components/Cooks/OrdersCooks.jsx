@@ -60,7 +60,7 @@ const OrdersCooks = () => {
 
     return (
         <div className="">
-            <div className="flex flex-col md:flex md:flex-row justify-between">
+            <div className="flex flex-row md:flex md:flex-row justify-between">
                 <img className="h-14 m-2 rounded-lg" src="../../public/images/logo-restaurant.jpg" alt="" />
                 <h1 className="p-6 font-bold">Ordenes</h1>
                 <button className='bg-red-600 text-white border hover:bg-red-700 px-4 rounded-md m-5' onClick={() => handlerLogout()}>Salir</button>

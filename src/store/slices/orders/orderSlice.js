@@ -6,6 +6,7 @@ export const orderSlice = createSlice({
   name: "order",
   initialState: {
     orders: initialOrder,
+    ordersById: [],
   },
   reducers: {
     getOrder: (state, action) => {
@@ -30,15 +31,10 @@ export const orderSlice = createSlice({
       }
     },
     getOrderByNumber: (state, action) => {
-      const index = state.orders.findIndex(order => order.order_number === action.payload.order_number);
-      if (index !== -1) {
-        state.orders[index] = action.payload;
-      } else {
-        state.orders.push(action.payload);
-      }
+      state.ordersById = action.payload;
     },
-
+    
   },
 });
 
-export const { getOrder, addOrder, deleteOrderRedux, updateOrderRedux, getOrderByID } = orderSlice.actions;
+export const { getOrder, addOrder, deleteOrderRedux, updateOrderRedux, getOrderByNumber } = orderSlice.actions;

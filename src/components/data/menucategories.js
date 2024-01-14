@@ -17,11 +17,11 @@ export const menucategories = [
     {
         name: 'Gaseosas',
         img : 'https://img.freepik.com/foto-gratis/hielo-cayendo-bebida-marron_1194-1074.jpg?w=740&t=st=1704235027~exp=1704235627~hmac=ade5edcd2a84f958c70adfa7fd20ca9033c2e283b4301281e27ed8512fab81de',
-        category: 'postre',
+        category: 'gaseosas',
     },
     {
-        name: 'Bebidas',
+        name: 'Jugos',
         img : 'https://cursa-json-routes.s3.amazonaws.com/texts/byId/1000257/imgs/thumb.jpg',
-        category: 'bebidas',
+        category: 'jugos',
     },
 ];
