@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { NavLink } from "react-router-dom"
 
 const TableEmployees = () => {
-    const { employee, handlerGetEmployees } = useEmployee();
+    const { employee, handlerGetEmployees, handlerDeleteEmployee } = useEmployee();
     useEffect(() => {
         handlerGetEmployees();
     }, [])
@@ -51,7 +51,7 @@ const TableEmployees = () => {
                                     !== 'admin' && ( // Check if employee is not an admin
                                         <button
                                             className="px-6 py-1 m-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-600 rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-80"
-                                            // onClick for delete
+                                            onClick={() => handlerDeleteEmployee(emp.id)}
                                         >
                                             Eliminar
                                         </button>

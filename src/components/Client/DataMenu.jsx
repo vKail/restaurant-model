@@ -1,12 +1,20 @@
 import { dataitemsmenu } from "../data/dataitemsmenu";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useProducts } from "../hooks/useProducts";
+import { useEffect } from "react";
 
 const DataMenu = () => {
 
     const { category } = useParams();
+    const {products, handlerGetProducts} = useProducts();
 
-    const categoryfilter = dataitemsmenu.filter(item => item.category === category);
+    useEffect(() => {
+        handlerGetProducts();
+    }, []);
+    console.log(products);
+    
+    const categoryfilter = products.filter(item => item.category === category);
     return (
         <div className="flex flex-col space-y-5 w-full p-4  justify-center md:flex-row min-h-screen bg-gradient-to-t from-red-300">
             

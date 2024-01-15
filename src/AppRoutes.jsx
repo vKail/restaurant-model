@@ -6,9 +6,12 @@ import useAuth from "./components/hooks/useAuth";
 import PageRoutes from "./routes/PageRoutes";
 import Invoices from "./components/Cashier/Invoices";
 import OrderInvoice from "./components/Cashier/OrderInvoice";
-
+import TableInvoices from "./components/Cashier/TableInvoices";
+import { useProducts } from "./components/hooks/useProducts";
+import { useEffect } from "react";
 
 const AppRoutes = () => {
+
      const { login } = useAuth();
      return (
           <>
@@ -30,8 +33,7 @@ const AppRoutes = () => {
                          )}
                          <Route path="/menu" element={<CartItemsMenu />} />
                          <Route path="/menu/:category" element={<DataMenu />} />
-                         <Route path="/invoices" element={<Invoices />} />
-                         <Route path="/invoices/:orderId" element={<OrderInvoice />} />
+
 
 
                     </Routes>

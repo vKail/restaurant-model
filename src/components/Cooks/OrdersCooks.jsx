@@ -8,7 +8,7 @@ const OrdersCooks = () => {
     //useOrdersChannel(handlerGetOrders);
     const [sortedOrders, setSortedOrders] = useState([]);
     const { handlerLogout } = useAuth();
-    useOrdersChannel2(handlerGetOrders);
+    
 
     useEffect(() => {
 

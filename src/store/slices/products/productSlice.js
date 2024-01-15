@@ -58,6 +58,13 @@ export const productSlice = createSlice({
                 state.products[productIndex].count = count;
             }
         },
+        updateProductRedux: (state, action) => {
+            const { id, newStatus } = action.payload;
+            const index = state.products.findIndex(product => product.id === id);
+            if (index !== -1) {
+                state.products[index].status = newStatus;
+            }
+        },
     },
 });
 
@@ -71,4 +78,5 @@ export const {
     incrementProductCount,
     decrementProductCount,
     setProductCount,
+    updateProductRedux,
 } = productSlice.actions;

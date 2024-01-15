@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import {getAllOrders, createOrder, deleteOrder, updateOrder, getOrderById, updateItem, updateOrderState, addItemsOrder} from "../services/orderService";
+import {getAllOrders, createOrder, deleteOrder, updateOrder, getOrderById, updateItem, updateOrderState, addItemsOrder, updateOrderStateCancel} from "../services/orderService";
 import { getOrder, addOrder, updateOrderRedux, getOrderByNumber, deleteOrderRedux } from "../../store/slices/orders/orderSlice";
 import { productSlice } from "../../store/slices/products/productSlice";
 
@@ -25,6 +25,7 @@ export const useOrder = () => {
           if (response.status === 200) {
             dispatch(getOrderByNumber(response.data));
           }
+
         } catch (error) {
           console.log(error);
         }
@@ -55,6 +56,18 @@ export const useOrder = () => {
       const handlerUpadateOrder = async (id) => {
         try {
           const response = await updateOrder(id);
+          if (response.status === 200) {
+            dispatch(updateOrderRedux({id}));
+            handlerGetOrders();
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      const handlerUpdateOrderStateCancel = async (id) => {
+        try {
+          const response = await updateOrderStateCancel(id);
           if (response.status === 200) {
             dispatch(updateOrderRedux({id}));
             handlerGetOrders();
@@ -100,5 +113,5 @@ export const useOrder = () => {
         }
       }
 
-    return { orders, handlerGetOrders, handlerCreateOrder, handlerDeleteOrder, handlerUpadateOrder, handlerGetOrdersById, handlerUpdateItem, handlerUpdateOrderState, handlerAddItemsOrder };
+    return { orders, handlerGetOrders, handlerCreateOrder, handlerDeleteOrder, handlerUpadateOrder, handlerGetOrdersById, handlerUpdateItem, handlerUpdateOrderState, handlerAddItemsOrder, handlerUpdateOrderStateCancel };
 }

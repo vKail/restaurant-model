@@ -32,6 +32,7 @@ const OrderWaiters = ({ mode }) => {
     const order = useSelector((state) =>
         state.order.orders.find((o) => o.id == orderId)
     );
+    console.log(products)
 
     useEffect(() => {
       if (mode === 'update' && order) {

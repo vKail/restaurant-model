@@ -2,6 +2,7 @@ import { getAllEmployees, getEmployeeById, newEmployee, removeEmployee, editEmpl
 import { setEmployee, createEmployee, updateEmployee, deleteEmployee, getEmployeeByIdt } from "../../store/slices/employee/employeeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const useEmployee = () => {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ export const useEmployee = () => {
             const response = await newEmployee(Employee);
             if (response.status === 200 || response.status === 201) {
                 dispatch(createEmployee(response.data));
+                handlerGetEmployees();
                 navigate("/admin/tableEmployees");
             }
         } catch (error) {
@@ -45,12 +47,39 @@ export const useEmployee = () => {
 
     const handlerDeleteEmployee = async (id) => {
         try {
-            const response = await removeEmployee(id);
-            if (response.status === 200) {
-                dispatch(deleteEmployee(id));
+            const response = await Swal.fire({
+                title: '¿Estas seguro?',
+                text: "No podras revertir esta accion!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            });
+            if (response.isConfirmed) {
+                const response = await removeEmployee(id);
+                if (response.status === 200) {
+                    dispatch(deleteEmployee({ id }));
+                    handlerGetEmployees();
+                    Swal.fire(
+                        'Eliminado!',
+                        'El empleado ha sido eliminado.',
+                        'success'
+                    )
+                }
+            } else if (response.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelado',
+                    'El empleado no ha sido eliminado',
+                    'error'
+                )
             }
         } catch (error) {
             console.log(error);
+            Swal.fire(
+                'Cancelado',
+                'El empleado no ha sido eliminado',
+                'error'
+            )
         }
     }
 

@@ -25,8 +25,17 @@ export const tableSlice = createSlice({
     // Selecciona una mesa por ID
     getTableById: (state, action) => {
       state.selectedTableId = action.payload;
-    }
+    },
+    deleteTableRedux: (state, action) => {
+      const { id } = action.payload;
+      state.tables = state.tables.filter(
+        (table) => table.id !== id
+      );
+    },
+    addTableRedux: (state, action) => {
+      state.tables.push(action.payload);
+    },
   },
 });
 
-export const { getTables, updateTableStatusRedux, getTableById } = tableSlice.actions;
+export const { getTables, updateTableStatusRedux, getTableById, deleteTableRedux, addTableRedux } = tableSlice.actions;

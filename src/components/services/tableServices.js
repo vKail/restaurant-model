@@ -34,4 +34,14 @@ export const updateTableStatus = async (id, status) => {
     } catch (error) {
         throw error
     }
+
+}
+
+export const deleteTable = async (id) => {
+    try{
+        return await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/tables/${id}`);
+
+    } catch (error) {
+        throw error
+    }
 }

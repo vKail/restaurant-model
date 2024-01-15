@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useTables } from "../hooks/useTables";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useOrdersChannel2 } from "../hooks/useOrdersChanel2";
 
 const OrdersCreated = () => {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const OrdersCreated = () => {
         handlerGetOrders();
     }, []);
 
-    const optionsCheckUpdate = async (orderId) => {
+    const optionsCheckUpdate = async (orderId, tableId) => {
         const { value: accept } = await Swal.fire({
             title: "¿Desea finalizar la orden?",
             input: "radio",
@@ -43,6 +44,7 @@ const OrdersCreated = () => {
             Swal.fire("La orden será finalizada :)").then(() => {
                 // Llama a la función para actualizar la orden si el usuario selecciona "Sí"
                 handlerUpdateOrderState(orderId);
+                handlerUpdateTableStatus(tableId, 'free');
 
             });
         } else if (accept === '0') {
@@ -95,12 +97,16 @@ const OrdersCreated = () => {
                 return 'Estado desconocido';
         }
     };
+
+    const ordersFilter = ordersFiltered.filter((order) => order.order.status !== 'billed');
+    const ordersFilter2 = ordersFilter.filter((order) => order.order.status !== 'finish');
+
     return (
         <div className="">
             <NavEmployes />
             <h1 className="p-6 font-bold">Ordenes</h1>
             <div className="md:grid md:grid-cols-2 lg:grid lg:grid-cols-3  xl:grid xl:grid-cols-4 lg:gap-5 p-5 " >
-                {ordersFiltered.map((order) => (
+                {ordersFilter2.map((order) => (
                     <div className="border border-zinc-200 p-5  rounded-2xl shadow-2xl m-5 w-12/12 box-border min-w-min" key={order.order.order_number}>
                         <a className=" font-bold">Orden {order.order.order_number}</a>
                         <p>Estado: {getOrderStatusText(order.order.status)}</p>
@@ -115,7 +121,7 @@ const OrdersCreated = () => {
                             <button className='bg-red-600 text-white p-2 rounded-md m-1 md:m-0 transition duration-300 ease-in-out transform  hover:scale-110 ' onClick={() => optionscheck( order.order.order_number,order.order.table_id)}>
                                 Eliminar
                             </button>
-                            <button className='bg-yellow-600 text-white p-2 rounded-md m-1 md:m-0 transition duration-300 ease-in-out transform  hover:scale-110' onClick={() => optionsCheckUpdate(order.order.order_number)}>
+                            <button className='bg-yellow-600 text-white p-2 rounded-md m-1 md:m-0 transition duration-300 ease-in-out transform  hover:scale-110' onClick={() => optionsCheckUpdate(order.order.order_number, order.order.table_id)}>
                                 Finalizar
                             </button>
                             <NavLink className='bg-green-600 text-white p-2 rounded-md md:m-0 m-1 transition duration-300 ease-in-out transform  hover:scale-110' to={`/ordersCreated/update/${order.order.order_number}`}>

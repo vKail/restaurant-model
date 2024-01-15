@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getAllProducts, getProductById, createProduct, deleteProduct, updateProduct } from "../services/productServices";
-import { getProductsRedux, getProductByIdRedux, addProductRedux, deleteProductRedux } from "../../store/slices/products/productSlice";
+import { getProductsRedux, getProductByIdRedux, addProductRedux, deleteProductRedux, updateProductRedux } from "../../store/slices/products/productSlice";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 export const useProducts = () => {
@@ -32,11 +33,13 @@ export const useProducts = () => {
         }
       }
 
-      const handlerAddProduct = (product) => {
+      const handlerAddProduct = async (product) => {
         try {
-          const response = createProduct(product);
+          const response = await createProduct(product);
           if (response.status === 200 || response.status === 201) {
+            localStorage.setItem("product", JSON.stringify(response.data));
             dispatch(addProductRedux(response.data));
+            handlerGetProducts();
             navigate("/admin/tableProducts");
           }
         } catch (error) {
@@ -44,22 +47,38 @@ export const useProducts = () => {
         }
       }
 
-      const handlerDeleteProduct = (id) => {
+      const handlerDeleteProduct = async (id) => {
         try {
-          const response = deleteProduct(id);
-          if (response.status === 200) {
-            dispatch(deleteProductRedux(id));
+          const response = await Swal.fire({
+            title: "¿Estas seguro?",
+            text: "No podras revertir esta accion!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+          });
+          if (response.isConfirmed) {
+            const response = deleteProduct(id);
+            if (response.status === 200) {
+              dispatch(deleteProductRedux({ id }));
+              handlerGetProducts();
+            }
+          } else if (response.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire("Cancelado", "Tu producto esta a salvo :)", "error");
           }
+
         } catch (error) {
           console.log(error);
+          Swal.fire("Error", "No se pudo eliminar el producto", "error");
         }
       }
 
-      const handlerUpdateProduct = (id, product) => {
+      const handlerUpdateProduct = async (id, product) => {
         try {
-          const response = updateProduct(id, product);
+          const response = await updateProduct(id, product);
           if (response.status === 200) {
             dispatch(updateProductRedux(response.data));
+            handlerGetProducts();
             navigate("/admin/tableProducts");
           }
         } catch (error) {
