@@ -22,7 +22,7 @@ const TableInvoices = () => {
         <div className="">
             <NavCashier />
             <h1 className="text-2xl font-bold mb-5">Facturas</h1>
-            <table className="min-w-full table-auto border-collapse shadow overflow-hidden rounded-lg">
+            <table className="min-w-full table-auto border-collapse shadow overflow-hidden rounded-lg ">
                 <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                     <tr>
                         <th className="py-3 px-6 text-left">Factura Nro</th>

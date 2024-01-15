@@ -118,9 +118,7 @@ const OrdersCreated = () => {
                             </div>
                         ))}
                         <div className="flex flex-col md:flex md:flex-row justify-center">
-                            <button className='bg-red-600 text-white p-2 rounded-md m-1 md:m-0 transition duration-300 ease-in-out transform  hover:scale-110 ' onClick={() => optionscheck( order.order.order_number,order.order.table_id)}>
-                                Eliminar
-                            </button>
+                           
                             <button className='bg-yellow-600 text-white p-2 rounded-md m-1 md:m-0 transition duration-300 ease-in-out transform  hover:scale-110' onClick={() => optionsCheckUpdate(order.order.order_number, order.order.table_id)}>
                                 Finalizar
                             </button>

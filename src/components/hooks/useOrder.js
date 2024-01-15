@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import {getAllOrders, createOrder, deleteOrder, updateOrder, getOrderById, updateItem, updateOrderState, addItemsOrder, updateOrderStateCancel} from "../services/orderService";
 import { getOrder, addOrder, updateOrderRedux, getOrderByNumber, deleteOrderRedux } from "../../store/slices/orders/orderSlice";
-import { productSlice } from "../../store/slices/products/productSlice";
+import { resetProductCounts } from "../../store/slices/products/productSlice";
 
 export const useOrder = () => {
     const { orders } = useSelector((state) => state.order);
@@ -13,6 +13,7 @@ export const useOrder = () => {
           if (response.status === 200) {
             sessionStorage.setItem("id", JSON.stringify(response.data));
             dispatch(getOrder(response.data));
+            dispatch(resetProductCounts());
           }
         } catch (error) {
           console.log(error); 
@@ -36,6 +37,7 @@ export const useOrder = () => {
           const response = await createOrder(newOrder);
           if (response.status === 200) {
             dispatch(addOrder(response.data));
+            dispatch(resetProductCounts());
           }
         } catch (error) {
           console.log(error);

@@ -1,31 +1,27 @@
-import {menucategories} from '../data/menucategories';
-import DataMenu from './DataMenu';
-import { Routes, Route, Link, NavLink, Navigate } from "react-router-dom";
-const CartItemsMenu = () => {
-    return(
-        <div className='flex flex-col space-y-5 w-full p-4  justify-center md:flex-row min-h-screen bg-gradient-to-t from-red-300'>
-            <div className='flex flex-row justify-start'>
-            <img className='flex w-40 rounded-full shadow-sm ' src="./images/menu-suki.jpeg" alt="" />
-            <h1 className='font-sans text-2xl p-10 text-center font-bold italic '>🖤 SUKI'S MENU 🖤</h1>
-            </div>
-           { menucategories.map((menucategory) => {
-                return (
-                    <div key={menucategory.name} className='flex flex-row justify-between text-center items-center shadow-lg bg-white m-0  rounded-md' >
-                        <div className='flex justify-center rounded-md  md:h-52 md:w-32'>
-                            <img className=' p-4 w-28'  src={menucategory.img} alt={menucategory.name} />
-                        </div>
-                            <div className='flex flex-col justify-center align-top text-justify'>
-                                <h2 className='text-xl'>{menucategory.name}</h2>
-                        </div>
-                        <div className='ml'>
-                            <Link to={`/menu/${menucategory.category}`} className='flex bg-sky-200 w-20  h-100  rounded-lg justify-center content-center'>+</Link>
+import { menucategories } from '../data/menucategories';
+import { Link } from "react-router-dom";
 
+const CartItemsMenu = () => {
+    return (
+        <div className='flex flex-col items-center justify-center w-full p-4 bg-gray-100 min-h-screen'>
+            <div className='flex flex-col items-center mb-5'>
+                <img className='w-40 rounded-full shadow-sm mb-3' src="./images/menu-suki.jpeg" alt="SUKI'S MENU" />
+                <h1 className='text-2xl font-bold'>🖤 SUKI'S MENU 🖤</h1>
+            </div>
+
+            {menucategories.map((menucategory) => (
+                <div key={menucategory.name} className='bg-white rounded-lg shadow p-4 mb-4 w-full md:max-w-md'>
+                    <div className='flex flex-row items-center'>
+                        <img className='mr-4 w-20 h-20 rounded-full' src={menucategory.img} alt={menucategory.name} />
+                        <div className='flex flex-col'>
+                            <h2 className='text-xl font-semibold'>{menucategory.name}</h2>
+                            <Link to={`/menu/${menucategory.category}`} className='mt-2 p-2 bg-sky-200 text-gray-700 rounded-lg text-center'>Ver Más</Link>
                         </div>
                     </div>
-                )
-            })
-        }
+                </div>
+            ))}
         </div>
     );
 };
+
 export default CartItemsMenu;

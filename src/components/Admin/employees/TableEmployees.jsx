@@ -8,6 +8,15 @@ const TableEmployees = () => {
     useEffect(() => {
         handlerGetEmployees();
     }, [])
+    const translateRole = (role) => {
+        const roles = {
+            'waiter': 'Mesero',
+            'chef': 'Cocinero',
+            'admin': 'Admin',
+            'cashier': 'Cajero'
+        };
+        return roles[role] || role; // Retorna la traducción o el rol original si no está definido
+    };
     return (
         <div className='flex m-5'>
             <aside className='w-1/4'>
@@ -39,14 +48,18 @@ const TableEmployees = () => {
                                 <td className="px-4 py-2">{emp.first_name}</td>
                                 <td className="px-4 py-2">{emp.last_name}</td>
                                 <td className="px-4 py-2">{emp.email}</td>
-                                <td className="px-4 py-2">{emp.role}</td>
+                                <td className="px-4 py-2">{translateRole(emp.role)}</td>
                                 <td>
-                                    <NavLink
+                                    {
+                                        emp.role !== 'admin' && ( // Check if employee is not an admin
+                                        <NavLink
                                         className="px-6 py-2 m-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
                                         to={`/admin/editEmployee/${emp.id}`}
                                     >
                                         Editar
                                     </NavLink>
+                                        )}
+                                
                                     {emp.role 
                                     !== 'admin' && ( // Check if employee is not an admin
                                         <button
