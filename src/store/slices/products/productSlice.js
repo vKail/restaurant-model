@@ -58,6 +58,19 @@ export const productSlice = createSlice({
                 state.products[productIndex].count = count;
             }
         },
+        updateProductRedux: (state, action) => {
+            const { id, newStatus } = action.payload;
+            const index = state.products.findIndex(product => product.id === id);
+            if (index !== -1) {
+                state.products[index].status = newStatus;
+            }
+        },
+        resetProductCounts: (state) => {
+            state.products = state.products.map(product => ({
+                ...product,
+                count: 0 // Restablece el contador a 0
+            }));
+        },
     },
 });
 
@@ -71,4 +84,6 @@ export const {
     incrementProductCount,
     decrementProductCount,
     setProductCount,
+    updateProductRedux,
+    resetProductCounts,
 } = productSlice.actions;

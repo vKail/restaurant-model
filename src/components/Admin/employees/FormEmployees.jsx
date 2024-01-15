@@ -15,7 +15,17 @@ const FormEmployees = ({ value, onChange, onSubmit, isEditing }) => {
     });
 
     const validateField = (name, value) => {
-        return value.trim() !== ''; // General validation for not empty
+        switch (name) {
+            case 'first_name':
+            case 'last_name':
+                return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value); // Solo letras y espacios
+            case 'username':
+                return /^[a-zA-Z0-9]+$/.test(value); // Solo letras y números
+            case 'password':
+                return value.length >= 6; // Mínimo 6 caracteres
+            default:
+                return value.trim() !== ''; // No vacío para los demás campos
+        }
     }
 
     const handleChange = (e) => {
@@ -49,16 +59,17 @@ const FormEmployees = ({ value, onChange, onSubmit, isEditing }) => {
             <form onSubmit={handleSubmit} className="flex flex-col  bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
                 {/* First Name Field */}
                 <div className="grid grid-cols-3 gap-4 items-center mb-4">
-                    <label htmlFor="first_name" className="text-gray-700 font-semibold">Nombre</label>
-                    <input type="text" name="first_name" value={value.first_name} onChange={handleChange} placeholder="Nombre" className={`col-span-2 border-2 ${!validation.first_name ? 'border-red-500' : 'border-gray-300'} p-2 rounded-md focus:outline-none focus:border-blue-500`} />
-                    {!validation.first_name && <p className="col-span-3 text-red-500 text-xs italic mt-1">Este campo es obligatorio.</p>}
-                </div>
+    <label htmlFor="first_name" className="text-gray-700 font-semibold">Nombre</label>
+    <input type="text" name="first_name" value={value.first_name} onChange={handleChange} placeholder="Nombre" className={`col-span-2 border-2 ${!validation.first_name ? 'border-red-500' : 'border-gray-300'} p-2 rounded-md focus:outline-none focus:border-blue-500`} />
+    {!validation.first_name && <p className="col-span-3 text-red-500 text-xs italic mt-1">El nombre solo debe contener letras y no puede estar vacío.</p>}
+</div>
+
 
                 {/* Last Name Field */}
                 <div className="grid grid-cols-3 gap-4 items-center mb-4">
                     <label htmlFor="last_name" className="text-gray-700 font-semibold">Apellido</label>
                     <input type="text" name="last_name" value={value.last_name} onChange={handleChange} placeholder="Apellido" className={`col-span-2 border-2 ${!validation.last_name ? 'border-red-500' : 'border-gray-300'} p-2 rounded-md focus:outline-none focus:border-blue-500`} />
-                    {!validation.last_name && <p className="col-span-3 text-red-500 text-xs italic mt-1">Este campo es obligatorio.</p>}
+                    {!validation.last_name && <p className="col-span-3 text-red-500 text-xs italic mt-1">El apellido solo debe contener letras y no puede estar vacío.   </p>}
                 </div>
 
                 {/* Username Field */}
@@ -81,7 +92,7 @@ const FormEmployees = ({ value, onChange, onSubmit, isEditing }) => {
                     <div className="grid grid-cols-3 gap-4 items-center mb-4">
                         <label htmlFor="password" className="text-gray-700 font-semibold">Password</label>
                         <input type="password" name="password" value={value.password} onChange={handleChange} placeholder="Password" className={`col-span-2 border-2 ${!validation.password ? 'border-red-500' : 'border-gray-300'} p-2 rounded-md focus:outline-none focus:border-blue-500`} />
-                        {!validation.password && <p className="col-span-3 text-red-500 text-xs italic mt-1">Este campo es obligatorio.</p>}
+                        {!validation.password && <p className="col-span-3 text-red-500 text-xs italic mt-1">La contraseña debe tener un mínimo de 6 caracteres.</p>}
                     </div>
                 )}
 

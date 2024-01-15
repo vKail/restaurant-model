@@ -1,8 +1,10 @@
 import logo from '/public/images/logo-restaurant.jpg';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const AdminAside = () => {
+    const {handlerLogout} = useAuth();
     return (
 <aside className="w-64 bg-gray-100 p-5 h-screen shadow-md  ">
     <div className="flex justify-center mb-6">
@@ -36,6 +38,9 @@ const AdminAside = () => {
             </li>
         </ul>
     </nav>
+    <div className='my-10'>
+        <button className='bg-red-600 text-white border hover:bg-red-700 px-4 rounded-md' onClick={() => handlerLogout()}>Salir</button>
+      </div>
 </aside>
     );
 }

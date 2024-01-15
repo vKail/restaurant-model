@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useOrder } from "../hooks/useOrder"
 import { NavLink } from "react-router-dom";
+import NavCashier from "../Nav/NavCashier";
 
 const Invoices = () => {
     const { orders, handlerGetOrders } = useOrder();
@@ -9,8 +10,9 @@ const Invoices = () => {
     }, []);
     const ordersFinished = orders.filter(order => order.order.status === 'finish');
     return (
-        <div className="m-5">
-        <h1 className="text-2xl font-bold mb-5">Invoices</h1>
+        <div className="">
+        <NavCashier />
+        <h1 className="text-2xl font-bold m-5">Ordenes por facturar</h1>
         <table className="min-w-full table-auto border-collapse">
       <thead>
         <tr className="bg-gray-200">

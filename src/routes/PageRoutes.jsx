@@ -8,6 +8,7 @@ import { useProducts } from "../components/hooks/useProducts";
 import { useEffect } from "react";
 import { useOrder } from "../components/hooks/useOrder";
 import { useEmployee } from "../components/hooks/useEmployee";
+import { useInvoice } from "../components/hooks/useInvoice";
 import UpdateOrders from "../components/Waiter/UpdateOrders";
 import NewOrder from "../components/Waiter/NewOrder";
 import Invoices from "../components/Cashier/Invoices";
@@ -21,6 +22,9 @@ import TableTables from "../components/Admin/tables/TableTables";
 import EditEmployee from "../components/Admin/employees/EditEmployee";
 import NewTable from "../components/Admin/tables/NewTable";
 import EditProduct from "../components/Admin/products/EditProduct";
+import TableInvoices from "../components/Cashier/TableInvoices";
+import { useOrdersChannel2 } from "../components/hooks/useOrdersChanel2";
+
 
 const PageRoutes = () => {
     const { login } = useAuth();
@@ -28,11 +32,15 @@ const PageRoutes = () => {
     const { handlerGetProducts } = useProducts();
     const { handlerGetOrders } = useOrder();
     const { handlerGetEmployees } = useEmployee();
+    const { handlerGetInvoices } = useInvoice();
+    useOrdersChannel2(handlerGetOrders);
 
     useEffect(() => {
         handlerGetOrders();
         handlerGetTables();
         handlerGetProducts();
+        handlerGetEmployees();
+        handlerGetInvoices();
     }, []);
     console.log(login);
 
@@ -79,8 +87,10 @@ const PageRoutes = () => {
                             <Route path="/*" element={<Navigate to='/invoices' />} />
                             <Route path="/invoices" element={<Invoices />} />
                             <Route path="/invoices/:orderId" element={<OrderInvoice />} />
+                            <Route path="/invoices/tableInvoices" element={<TableInvoices />} />
                         </>
                     )}
+                    
                 </Routes>
             </main>
         </>

@@ -52,6 +52,14 @@ export const updateOrderState = async (id) => {
     }
 };
 
+export const updateOrderStateCancel = async (id) => {
+    try{
+        return await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/orders/${id}/OrdenPagada`);
+    } catch (error) {
+        throw error
+    }
+}
+
 export const deleteOrder = async (id) => {
     try{
         return await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/orders/${id}`);
