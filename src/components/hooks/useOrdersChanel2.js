@@ -55,5 +55,11 @@ export const useOrdersChannel2 =  (handlerGetOrders) => {
     } catch (error) {
       throw error;
   }
+  return () => {
+    if (ws.current) {
+        ws.current.close();
+        ws.current = null;
+    }
+};
     }, []); // Asegúrate de que useEffect no tenga dependencias para evitar el ciclo infinito
   };

@@ -2,6 +2,7 @@ import logo from '/public/images/logo-restaurant.jpg';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import useAuth from '../hooks/useAuth';
+import { ToastContainer } from 'react-toastify';
 
 const NavEmployes = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,6 +10,7 @@ const NavEmployes = () => {
 
   return (
     <nav className="bg-white shadow dark:bg-gray-800">
+      <ToastContainer />
       <div className="container px-6 py-3 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <div>

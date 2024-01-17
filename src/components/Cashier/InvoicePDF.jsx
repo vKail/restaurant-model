@@ -128,12 +128,8 @@ const InvoicePDF = ({ invoice }) => {
                         <Text style={styles.summaryDetail}>{invoice.invoice.payment_method}</Text>
                     </View>
                     <View style={styles.summaryRow}>
-                        <Text>Subtotal:</Text>
-                        <Text style={styles.summaryDetail}>{invoice.order.subtotal}</Text>
-                    </View>
-                    <View style={styles.summaryRow}>
                         <Text>Total:</Text>
-                        <Text style={styles.summaryDetail}>{invoice.invoice.total}</Text>
+                        <Text style={styles.summaryDetail}>{invoice.order.subtotal}</Text>
                     </View>
                 </View>
 

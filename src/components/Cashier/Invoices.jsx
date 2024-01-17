@@ -10,10 +10,12 @@ const Invoices = () => {
     }, []);
     const ordersFinished = orders.filter(order => order.order.status === 'finish');
     return (
-        <div className="">
-        <NavCashier />
+      <div className="grid place-items-center min-h-screen">
+      <div className="w-full">
+          <NavCashier />
+      </div>
         <h1 className="text-2xl font-bold m-5">Ordenes por facturar</h1>
-        <table className="min-w-full table-auto border-collapse">
+        <table className="w-5/6 table-auto border-collapse shadow overflow-hidden rounded-lg justify-center text-gray-600">
       <thead>
         <tr className="bg-gray-200">
           <th className="px-4 py-2 border-b border-gray-300">Orden</th>

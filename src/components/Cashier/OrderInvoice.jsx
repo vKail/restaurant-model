@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useInvoice } from "../hooks/useInvoice";
 import NavCashier from "../Nav/NavCashier";
 import ButtonWrapper from "./ButtonWraper";
+import { ToastContainer } from "react-toastify";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const OrderInvoice = () => {
@@ -159,6 +160,7 @@ const OrderInvoice = () => {
     };
     return (
         <div className="">
+            <ToastContainer />
             <NavCashier />
             <div className="flex flex-col w-full justify-center items-center">
 
@@ -279,6 +281,12 @@ const OrderInvoice = () => {
                                     <td className="px-4 py-2">${item.subtotal}</td>
                                 </tr>
                             ))}
+                            <tr className="border-b">
+                                <td className="px-4 py-2 font-bold">Total</td>
+                                <td className="px-4 py-2 font-bold"></td>
+                                <td className="px-4 py-2 font-bold"></td>
+                                <td className="px-4 py-2 font-bold">${orderDetails.order.total}</td>
+                            </tr>
                         </tbody>
                     </table>
                     <select

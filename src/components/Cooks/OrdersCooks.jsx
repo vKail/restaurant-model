@@ -8,7 +8,7 @@ const OrdersCooks = () => {
     //useOrdersChannel(handlerGetOrders);
     const [sortedOrders, setSortedOrders] = useState([]);
     const { handlerLogout } = useAuth();
-    
+
 
     useEffect(() => {
 
@@ -78,15 +78,22 @@ const OrdersCooks = () => {
                             >
                                 <p>Orden {order.order.order_number}</p>
                                 <p>Mesa: {order.order.table_id}</p>
+                                <div className="flex flex-col">
                                 {order.items.map((item) => (
-                                    <button
+                                    
+                                        item.product.category !== 'gaseosas' && (
+                                        <button
                                         key={item.product.id}
                                         className={`font-bold underline underline-offset-2 ${item.status === 'pending' ? 'decoration-red-500 text-red-500' : 'decoration-sky-500 text-sky-500'}`}
                                         onClick={() => updateItemStatus(item.id, order.order.order_number)}
                                         disabled={item.status !== 'pending'}>
                                         {item.product.name} x{item.quantity}
                                     </button>
+                                        )
+                                    
+                                   
                                 ))}
+                                </div>
                             </div>
                         ))}
                     </div>
